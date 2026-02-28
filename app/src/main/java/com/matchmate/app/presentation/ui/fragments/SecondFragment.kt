@@ -1,4 +1,4 @@
-package com.matchmate.app
+package com.matchmate.app.presentation.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.matchmate.app.R
 import com.matchmate.app.databinding.FragmentSecondBinding
 
 /**

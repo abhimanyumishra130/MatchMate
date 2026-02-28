@@ -1,4 +1,4 @@
-package com.matchmate.app.ui.theme
+package com.matchmate.app.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -66,4 +67,22 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    //Hilt
+    implementation(libs.hilt.dagger.hilt.android)
+    ksp(libs.hilt.dagger.hilt.compiler)
+
+
+    //Retrofit
+    implementation(libs.retrofit)
+    // Retrofit with Scalar Converter
+    implementation(libs.converter.scalars)
+    // Retrofit with Gson Converter
+    implementation(libs.retrofit.gson)
+
+    //Room
+    implementation (libs.room.runtime )
+    ksp(libs.room.compiler)
+
+    //glide
+    implementation(libs.glide)
 }
