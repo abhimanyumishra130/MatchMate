@@ -2,6 +2,7 @@ package com.matchmate.app.core.di
 
 import android.content.Context
 import androidx.room.Room
+import com.matchmate.app.BuildConfig
 import com.matchmate.app.data.service.MainService
 import dagger.Module
 import dagger.Provides
@@ -9,6 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -20,7 +22,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit{
         return Retrofit.Builder()
-            .baseUrl("https://randomuser.me/api/") // Replace with actual base URL
+            .baseUrl(BuildConfig.BASE_URL) // Replace with actual base URL
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -28,13 +30,15 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): okhttp3.OkHttpClient {
-        return okhttp3.OkHttpClient.Builder()
+    fun provideOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val original = chain.request()
                 val requestBuilder = original.newBuilder()
                 chain.proceed(requestBuilder.build())
-            }
+            }.addInterceptor (HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .build()
     }
 

@@ -7,6 +7,10 @@ import retrofit2.http.Query
 
 interface MainService {
 
-    @GET("")
-    suspend fun fetchData(@Query("result") result: Int): Response<MatchResult>
+    @GET(ENDPOINT)
+    suspend fun fetchData(@Query("results") results: Int): Response<MatchResult>
+
+    companion object {
+        const val ENDPOINT = "api/"
+    }
 }

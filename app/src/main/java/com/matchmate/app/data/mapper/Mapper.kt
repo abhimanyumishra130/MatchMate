@@ -44,9 +44,6 @@ fun User.toPersonEntity(): PersonEntity{
 fun List<User>.toPersonEntityList(): List<PersonEntity> {
     return this.map { it.toPersonEntity() }
 }
-fun List<User>.toPersonList(): List<Person> {
-    return this.map { it.toPersonEntity().toPerson()}
-}
 
 fun Person.toPersonEntity(): PersonEntity {
     return PersonEntity(

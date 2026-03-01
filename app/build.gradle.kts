@@ -1,8 +1,21 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+}
+
+private val localProps by lazy {
+    val props = Properties().apply {
+        rootProject.file("local.properties")
+            .takeIf { it.exists() }
+            ?.inputStream()
+            ?.use(::load)
+    }
+    return@lazy { key: String -> props.getProperty(key) }
 }
 
 android {
@@ -17,6 +30,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_URL", "\"${localProps("BASE_URL")}\"")
     }
 
     buildTypes {
@@ -38,6 +53,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -78,9 +94,10 @@ dependencies {
     implementation(libs.converter.scalars)
     // Retrofit with Gson Converter
     implementation(libs.retrofit.gson)
+    implementation(libs.logging.interceptor)
 
     //Room
-    implementation (libs.room.runtime )
+    implementation(libs.room.runtime)
     ksp(libs.room.compiler)
 
     //glide

@@ -5,8 +5,6 @@ import com.matchmate.app.domain.model.Person
 import com.matchmate.app.domain.repository.MainRepository
 import javax.inject.Inject
 
-class FetchPersonUseCase @Inject constructor(val mainRepository: MainRepository) {
-    suspend operator fun invoke(): Result<List<Person>> {
-        return mainRepository.fetchPersons()
-    }
+class FetchMoreUseCase @Inject constructor(val mainRepository: MainRepository) {
+        suspend operator fun invoke(): Result<List<Person>> = mainRepository.fetchMorePersons()
 }

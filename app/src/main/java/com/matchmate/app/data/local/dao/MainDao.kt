@@ -14,6 +14,9 @@ interface MainDao {
     @Query("SELECT * FROM person")
     fun fetchData(): List<PersonEntity>
 
+    @Query("SELECT * FROM person")
+    fun fetchPersonsEntities(): Flow<List<PersonEntity>>
+
     @Insert(onConflict = REPLACE)
     fun insertAllPersons(persons: List<PersonEntity>)
 
