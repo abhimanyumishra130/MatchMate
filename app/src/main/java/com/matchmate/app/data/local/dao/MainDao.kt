@@ -23,4 +23,7 @@ interface MainDao {
     @Query("DELETE FROM person")
     fun clearPersons()
 
+    @Delete
+    fun deletePerson(person: PersonEntity)
+
 }

@@ -5,6 +5,7 @@ import com.matchmate.app.core.utils.JsonUtil.toJson
 import com.matchmate.app.core.utils.Result
 import com.matchmate.app.data.local.dao.MainDao
 import com.matchmate.app.data.local.entity.User
+import com.matchmate.app.data.mapper.toPersonEntity
 import com.matchmate.app.data.mapper.toPersonEntityList
 import com.matchmate.app.data.mapper.toPersonList
 import com.matchmate.app.data.service.MainService
@@ -57,10 +58,14 @@ class MainRepositoryImpl @Inject constructor(
         return database.fetchPersonsEntities().map { it.toPersonList() }
     }
 
+    override fun deletePerson(person: Person) {
+        database.deletePerson(person.toPersonEntity())
+    }
+
     private suspend fun fetchDataFromApi(): List<User>? {
         repeat(3) { attempt ->
             try {
-                val response = service.fetchData(20)
+                val response = service.fetchData(4)
                 if (response.isSuccessful) {
                     Log.d(TAG, "fetchDataFromApi: ${response.body()?.results.toJson()}")
                     return response.body()?.results

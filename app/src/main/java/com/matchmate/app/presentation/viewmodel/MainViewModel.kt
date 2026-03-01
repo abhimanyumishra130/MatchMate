@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matchmate.app.domain.model.Person
+import com.matchmate.app.domain.usecase.DeletePersonUseCase
 import com.matchmate.app.domain.usecase.FetchMoreUseCase
 import com.matchmate.app.domain.usecase.FetchPersonUseCase
 import com.matchmate.app.domain.usecase.GetDataUseCase
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val fetchPersonUseCase: FetchPersonUseCase,
     private val getDataUseCase: GetDataUseCase,
-    private val fetchMoreUseCase: FetchMoreUseCase
+    private val fetchMoreUseCase: FetchMoreUseCase,
+    private val deletePersonUseCase: DeletePersonUseCase
 ): ViewModel() {
 
     val data: StateFlow<List<Person>> = getDataUseCase()
@@ -45,10 +47,19 @@ class MainViewModel @Inject constructor(
 
 
 
-    fun fetchMoreData() {
-        viewModelScope.launch {
+    fun fetchMorePerson() {
+        CoroutineScope(Dispatchers.IO).launch {
             val moreData = fetchMoreUseCase()
+            Log.d("TAG", "fetchPersons: $moreData")
         }
     }
+
+    fun deletePerson(person: Person) {
+        CoroutineScope(Dispatchers.IO).launch {
+            deletePersonUseCase(person)
+            Log.d("TAG", "deletePerson: ")
+        }
+    }
+
 
 }

@@ -13,4 +13,5 @@ interface MainRepository {
 
     fun getDataFromDatabase(): Flow<List<Person>>
 
+    fun deletePerson(person: Person)
 }

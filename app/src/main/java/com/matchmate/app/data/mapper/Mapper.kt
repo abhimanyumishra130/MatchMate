@@ -1,7 +1,9 @@
 package com.matchmate.app.data.mapper
 
 import com.matchmate.app.core.utils.Education
+import com.matchmate.app.core.utils.MatchScoreCalculator
 import com.matchmate.app.core.utils.MatchStatus
+import com.matchmate.app.core.utils.MyData
 import com.matchmate.app.core.utils.Religion
 import com.matchmate.app.data.local.entity.PersonEntity
 import com.matchmate.app.data.local.entity.User
@@ -19,6 +21,7 @@ fun List<PersonEntity>.toPersonList(): List<Person> {
 }
 
 fun User.toPersonEntity(): PersonEntity{
+//    val score = MatchScoreCalculator.calculateMatchScore(MyData.myData,this.toPersonEntity())
     return PersonEntity(
         id = login.uuid,
 
