@@ -23,6 +23,9 @@ class MainRepositoryImpl @Inject constructor(
 ) : MainRepository {
     companion object {
         val TAG = MainRepositoryImpl::class.java.simpleName
+        private const val MAX_RETRIES = 3
+        private const val RESULT_SIZE = 10
+        private const val BASE_DELAY_MS = 1000L
     }
 
     override suspend fun fetchPersons(): Result<List<Person>> {
@@ -67,15 +70,15 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     private suspend fun fetchDataFromApi(): List<User>? {
-        repeat(3) { attempt ->
+        repeat(MAX_RETRIES) { attempt ->
             try {
-                val response = service.fetchData(4)
+                val response = service.fetchData(RESULT_SIZE)
                 if (response.isSuccessful) {
                     Log.d(TAG, "fetchDataFromApi: ${response.body()?.results.toJson()}")
                     return response.body()?.results
                 }
             } catch (e: IOException) {
-                delay((attempt + 1) * 1000L)
+                delay((attempt + 1) * BASE_DELAY_MS)
             } catch (e: HttpException) {
                 throw e
             }

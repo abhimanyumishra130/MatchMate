@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class UpdatePersonUseCase @Inject constructor(val mainRepository: MainRepository) {
     suspend operator fun invoke(person: Person) {
-        // Implementation for updating a person's information
+//         Implementation for updating a person's information
         mainRepository.updatePerson(person)
     }
 }
