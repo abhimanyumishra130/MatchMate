@@ -20,7 +20,7 @@ This project demonstrates clean architecture principles, offline-first data hand
 1. Clone repository
 
 ```
-git clone <repository_url>
+git clone https://github.com/abhimanyumishra130/MatchMate.git
 ```
 
 2. Open project in Android Studio.
