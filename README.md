@@ -5,6 +5,12 @@ The app fetches user profiles from a remote API, computes compatibility scores l
 
 This project demonstrates clean architecture principles, offline-first data handling, and scalable Android development practices.
 
+
+
+https://github.com/user-attachments/assets/4ef3288b-a3c0-45f1-bb61-6ed54ff0bfc8
+
+
+
 ---
 
 ## 🚀 Project Setup Instructions
