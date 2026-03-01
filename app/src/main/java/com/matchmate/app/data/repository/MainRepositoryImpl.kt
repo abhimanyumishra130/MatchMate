@@ -58,6 +58,10 @@ class MainRepositoryImpl @Inject constructor(
         return database.fetchPersonsEntities().map { it.toPersonList() }
     }
 
+    override suspend fun updatePerson(person: Person) {
+        database.updatePerson(person.toPersonEntity())
+    }
+
     override fun deletePerson(person: Person) {
         database.deletePerson(person.toPersonEntity())
     }

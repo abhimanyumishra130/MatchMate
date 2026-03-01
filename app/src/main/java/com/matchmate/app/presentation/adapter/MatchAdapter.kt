@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.matchmate.app.core.utils.MatchScoreCalculator
+import com.matchmate.app.core.utils.MatchStatus
 import com.matchmate.app.core.utils.MyData
 import com.matchmate.app.core.utils.loadImage
 import com.matchmate.app.databinding.ItemLayoutPersonBinding
@@ -35,8 +36,6 @@ class MatchAdapter : ListAdapter<Person, MatchAdapter.ViewHolder>(DiffCallback()
                 matchScore.text = "Match score : ${MatchScoreCalculator.calculateMatchScore(MyData.myData, item)}%"
 
                 ivLike.setOnClickListener {
-                    Toast.makeText(root.context, "Liked ${item.fullName}", Toast.LENGTH_SHORT)
-                        .show()
                     onLikeClicked?.invoke(item)
                 }
 
@@ -52,6 +51,17 @@ class MatchAdapter : ListAdapter<Person, MatchAdapter.ViewHolder>(DiffCallback()
                     onCloseClicked?.invoke(item)
                 }
 
+                if (item.status == MatchStatus.ACCEPTED){
+                    ivLike.visibility = ViewGroup.GONE
+                    matchSuccess.visibility = ViewGroup.VISIBLE
+                    ivMessage.visibility = ViewGroup.GONE
+                    ivClose.visibility = ViewGroup.GONE
+                }else{
+                    ivLike.visibility = ViewGroup.VISIBLE
+                    matchSuccess.visibility = ViewGroup.GONE
+                    ivMessage.visibility = ViewGroup.VISIBLE
+                    ivClose.visibility = ViewGroup.VISIBLE
+                }
 
             }
         }

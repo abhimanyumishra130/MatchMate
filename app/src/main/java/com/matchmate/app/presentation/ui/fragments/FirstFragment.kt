@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.matchmate.app.R
 import com.matchmate.app.core.utils.JsonUtil.toJson
+import com.matchmate.app.core.utils.MatchStatus
 import com.matchmate.app.databinding.FragmentFirstBinding
 import com.matchmate.app.domain.model.Person
 import com.matchmate.app.presentation.viewmodel.MainViewModel
@@ -68,10 +70,12 @@ class FirstFragment : Fragment() {
     }
 
     private fun onMessageClicked(data: Person) {
-
     }
     private fun onLikeClicked(data: Person) {
-
+        Toast.makeText(requireContext(), "Liked ${data.fullName}", Toast.LENGTH_SHORT)
+            .show()
+        viewModel.updatePerson(data.apply { status = MatchStatus.ACCEPTED })
+        adapter.notifyDataSetChanged()
     }
     private fun onCloseClicked(data: Person) {
         viewModel.deletePerson(data)

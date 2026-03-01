@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
+import androidx.room.Update
 import com.matchmate.app.data.local.entity.PersonEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -19,6 +20,9 @@ interface MainDao {
 
     @Insert(onConflict = REPLACE)
     fun insertAllPersons(persons: List<PersonEntity>)
+
+    @Update(onConflict = REPLACE)
+    fun updatePerson(person: PersonEntity)
 
     @Query("DELETE FROM person")
     fun clearPersons()

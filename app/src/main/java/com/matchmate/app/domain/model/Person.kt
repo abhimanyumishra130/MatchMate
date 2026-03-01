@@ -24,5 +24,5 @@ data class Person(
 
     @SerializedName("matchScore") val matchScore: Int,
 
-    @SerializedName("status") val status: MatchStatus
+    @SerializedName("status") var status: MatchStatus
 )

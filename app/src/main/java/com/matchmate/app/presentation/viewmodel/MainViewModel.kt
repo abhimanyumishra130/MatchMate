@@ -8,6 +8,7 @@ import com.matchmate.app.domain.usecase.DeletePersonUseCase
 import com.matchmate.app.domain.usecase.FetchMoreUseCase
 import com.matchmate.app.domain.usecase.FetchPersonUseCase
 import com.matchmate.app.domain.usecase.GetDataUseCase
+import com.matchmate.app.domain.usecase.UpdatePersonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,8 @@ class MainViewModel @Inject constructor(
     private val fetchPersonUseCase: FetchPersonUseCase,
     private val getDataUseCase: GetDataUseCase,
     private val fetchMoreUseCase: FetchMoreUseCase,
-    private val deletePersonUseCase: DeletePersonUseCase
+    private val deletePersonUseCase: DeletePersonUseCase,
+    private val updatePersonUseCase: UpdatePersonUseCase
 ): ViewModel() {
 
     val data: StateFlow<List<Person>> = getDataUseCase()
@@ -54,6 +56,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun updatePerson(person: Person) {
+        CoroutineScope(Dispatchers.IO).launch {
+            updatePersonUseCase(person)
+            Log.d("TAG", "updatePerson: ")
+        }
+    }
     fun deletePerson(person: Person) {
         CoroutineScope(Dispatchers.IO).launch {
             deletePersonUseCase(person)
