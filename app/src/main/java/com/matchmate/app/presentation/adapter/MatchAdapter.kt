@@ -12,7 +12,7 @@ import com.matchmate.app.core.utils.loadImage
 import com.matchmate.app.databinding.ItemLayoutPersonBinding
 import com.matchmate.app.domain.model.Person
 
-typealias LikeClickListener = (Person) -> Unit
+typealias LikeClickListener = (Person, Int) -> Unit
 typealias MessageClickListener = (Person) -> Unit
 typealias CloseClickListener = (Person) -> Unit
 
@@ -26,7 +26,7 @@ class MatchAdapter : ListAdapter<Person, MatchAdapter.ViewHolder>(DiffCallback()
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(item: Person) {
+        fun bind(item: Person, position: Int) {
             binding.apply {
                 ivProfile.loadImage(item.profileImage)
                 tvName.text = buildString { append(item.fullName).append(", ").append(item.age) }
@@ -36,7 +36,7 @@ class MatchAdapter : ListAdapter<Person, MatchAdapter.ViewHolder>(DiffCallback()
                 matchScore.text = "Match score : ${MatchScoreCalculator.calculateMatchScore(MyData.myData, item)}%"
 
                 ivLike.setOnClickListener {
-                    onLikeClicked?.invoke(item)
+                    onLikeClicked?.invoke(item, position)
                 }
 
                 ivMessage.setOnClickListener {
@@ -77,7 +77,7 @@ class MatchAdapter : ListAdapter<Person, MatchAdapter.ViewHolder>(DiffCallback()
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
 

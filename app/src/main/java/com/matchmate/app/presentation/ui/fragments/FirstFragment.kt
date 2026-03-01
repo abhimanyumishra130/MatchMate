@@ -10,12 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.matchmate.app.R
-import com.matchmate.app.core.utils.JsonUtil.toJson
 import com.matchmate.app.core.utils.MatchStatus
 import com.matchmate.app.databinding.FragmentFirstBinding
 import com.matchmate.app.domain.model.Person
@@ -71,17 +68,16 @@ class FirstFragment : Fragment() {
 
     private fun onMessageClicked(data: Person) {
     }
-    private fun onLikeClicked(data: Person) {
-        Toast.makeText(requireContext(), "Liked ${data.fullName}", Toast.LENGTH_SHORT)
-            .show()
+    private fun onLikeClicked(data: Person, position: Int) {
+        Toast.makeText(requireContext(), "Liked ${data.fullName}", Toast.LENGTH_SHORT).show()
         viewModel.updatePerson(data.apply { status = MatchStatus.ACCEPTED })
-        adapter.notifyDataSetChanged()
+        adapter.notifyItemChanged(position)
     }
     private fun onCloseClicked(data: Person) {
         viewModel.deletePerson(data)
     }
 
-    fun addScrollListener(){
+    private fun addScrollListener(){
         binding.recyclerView.addOnScrollListener(
             object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -96,29 +92,17 @@ class FirstFragment : Fragment() {
                     val lastVisibleItem =
                         layoutManager.findLastCompletelyVisibleItemPosition()
 
-                    if (shouldLoadNextPage(
-                            lastVisibleItem,
-                            totalItemCount
-                        )
-                    ) {
+                    if ( lastVisibleItem >= totalItemCount - 3) {
                         viewModel.fetchMorePerson()
                     }
                 }
             }
         )
     }
-    private fun shouldLoadNextPage(
-        lastVisible: Int,
-        totalCount: Int
-    ): Boolean {
-
-        return lastVisible >= totalCount - 3
-    }
 
     fun setData(){
         lifecycleScope.launch {
             viewModel.data.collect { data ->
-//                binding.textviewFirst.setText(data.toJson())
                     adapter.submitList(data)
             }
         }
